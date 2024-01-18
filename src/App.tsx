@@ -1,13 +1,14 @@
-import React from 'react'
+import { RouterProvider } from "react-router-dom";
+import router from "./routes";
+import { EventsProvider } from "./context/match/context";
 
-function App() {
- 
-
+const App = () => {
   return (
-    <>
-      <h1 className="text-3xl font-bold text-green-500 text-center mt-8">Hello React</h1>
-    </>
-  )
-}
-
-export default App
+    <div>
+      <EventsProvider>
+        <RouterProvider router={router} />
+      </EventsProvider>
+    </div>
+  );
+};
+export default App;
