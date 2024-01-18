@@ -5,7 +5,7 @@ import Signup from "../pages/signup";
 import Scorepanel from "../pages/scorepanel";
 
 const router = createBrowserRouter([
-  { path: "/", element: <Navigate to="/dashboard" replace /> },
+  { path: "/", element: <Navigate to="/scorepanel" replace /> },
   {
     path: "/scorepanel",
     element: <Scorepanel />,
