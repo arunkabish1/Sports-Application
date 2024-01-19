@@ -5,11 +5,9 @@ const AccountLayout = () => {
 
   return (
     <>
-      <Appbar />
+     <Appbar />
       <main>
-        <div className="mx-auto py-6">
           <Outlet />
-        </div>
       </main>
     </>
   )
