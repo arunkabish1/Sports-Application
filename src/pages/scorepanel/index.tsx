@@ -5,7 +5,7 @@ import Match from "../match";
 
 const scorepanel: React.FC = () => {
   return (
-    <div className=" static min-h-screen flex-row justify-center bg-gray-100">
+    <div>
       <AccountLayout />
       <Match />
     </div>
