@@ -3,7 +3,6 @@ import { useEventsState } from "../../context/match/context";
 import Scoreboard from "../../assets/scoreboard.gif";
 import Modal from "./Modal";
 
-
 const MatchDisplayAll: React.FC = () => {
   const state = useEventsState();
   const { events, loading, hasError, errorMsg } = state ?? {
@@ -12,7 +11,7 @@ const MatchDisplayAll: React.FC = () => {
     hasError: false,
     errorMsg: "",
   };
-console.log("Events:",events);
+  console.log("Events:", events);
 
   if (loading) {
     return <span>Loading...</span>;
@@ -24,20 +23,17 @@ console.log("Events:",events);
 
   const ongoingEvents = events.filter((event: any) => event.isRunning);
   console.log("Running events:", ongoingEvents);
-  
+
   const modelId = (id: number) => {
     console.log(id);
     return <Modal id={id} />;
-  }
-
-
+  };
   return (
     <div className="ml-5 mt-5">
       <div className="flex flex-row gap-2 ml-1 mt-3">
-      <img className="h-9" src={Scoreboard} />
+        <img className="h-9" src={Scoreboard} />
         <h1 className=" text-2xl font-bold">Live Score</h1>
       </div>
-
       <div className="flex gap-8 overflow-x-auto">
         {ongoingEvents.map((event: any) => (
           <div key={event.id} className="p-2">
@@ -53,6 +49,7 @@ console.log("Events:",events);
                 <span className="font-bold text-zinc-700">
                   {event.name && event.name.split("at")[0]}
                 </span>
+                <p> Score: Score: {event.score && event.score[event.teams[0].name]} - {event.score && event.score[event.teams[1].name]}</p>
                 <br />
                 <div>{modelId(event.id)}</div>
               </p>

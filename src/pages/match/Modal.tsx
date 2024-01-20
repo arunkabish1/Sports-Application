@@ -72,9 +72,11 @@ const Modal: React.FC<{ id: number }> = ({ id }) => {
 
   return (
     <div>
-      <button onClick={openModal} className="text-white rounded-lg cursor-pointer bg-blue-600 px-4 p-1">
+      <div className="flex justify-end">
+      <button onClick={openModal} className="rounded-md bg-blue-500 px-4 py-2 mt-2 text-sm font-medium text-white hover:bg-blue-600">
         Read More
       </button>
+      </div>
       <Transition show={isOpen} as={React.Fragment}>
         <div className="fixed inset-0 z-50">
           <div className="sm:block text-center">
@@ -87,8 +89,8 @@ const Modal: React.FC<{ id: number }> = ({ id }) => {
               leaveTo="opacity-0"
             >
               <div className="fixed inset-0 transition-opacity">
-                <div className="fixed inset-0 bg-black opacity-75"></div>
-              </div>
+                <div className="fixed  inset-0 bg-black opacity-75 "></div>
+              </div> 
             </Transition.Child>
 
             <Transition.Child
@@ -99,11 +101,26 @@ const Modal: React.FC<{ id: number }> = ({ id }) => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <div className="inline-block align-bottom bg-[#ffffff] rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:w-1/2 sm:my-10 ">
+              <div className="inline-block  overflow-y-auto max-h-[80vh] align-bottom bg-[#ffffff] rounded-lg text-left overflow-y-autoshadow-xl transform transition-all sm:w-3/4 sm:my-10 ">
                 <div className=" px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                   {events && (
                     <div>
-                      <h1 className="text-2xl font-bold text-center p-1">{events.sportName}</h1>
+                      <div className="flex justify-end">
+                      <button
+                    onClick={closeModal}
+                    type="button"
+                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                  >
+                    X
+                  </button>
+                      </div>
+                      <div className="flex">
+                      <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                  
+                </div>
+                      </div>
+                      
+                    <h1 className="text-2xl font-bold text-center p-1">{events.sportName}</h1>
                       <h2 className="text-xl font-bold text-center p-1">{events.name && events.name.split("at")[0]}</h2>
                       <h3 className="text-l font-bold text-center">At{events.name && events.name.split("at")[1]}</h3>
                       <div className="p-1 bg-[#c7e3e2] mb-2 mt-3 border border-gray-400 rounded-lg shadow-md text-grey-100 hover:bg-gray-300 cursor-pointer ">
@@ -116,7 +133,7 @@ const Modal: React.FC<{ id: number }> = ({ id }) => {
                       <p className=" p-1 text-zinc-900">Ending Time : {events.endsAt}</p>                      
                       </div>
                       
-                      <div className="overflow-y-auto p-1 bg-[#c7e3e2] border border-gray-400 rounded-lg shadow-md text-grey-100 hover:bg-gray-300 cursor-pointer">
+                      <div className="p-1 bg-[#c7e3e2] border border-gray-400 rounded-lg shadow-md text-grey-100 hover:bg-gray-300 cursor-pointer">
                       <h4 className="text-xl font-bold text-center p-1">Match Summary</h4>
                       <p className="text-gray-800 font-semibold">{events.story}</p>
                       </div>
