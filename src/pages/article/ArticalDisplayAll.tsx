@@ -14,7 +14,7 @@ const ArticalDisplayAll: React.FC = () => {
   const [Option, setOption] = useState("date");
 
   useEffect(() => {
-    const fetchSports = async () => {
+    const fetchsportsnames = async () => {
       try {
         const response = await fetch(`${API_ENDPOINT}/sports`);
         const data = await response.json();
@@ -24,7 +24,7 @@ const ArticalDisplayAll: React.FC = () => {
       }
     };
 
-    fetchSports();
+    fetchsportsnames();
   }, []);
 
   const modelId = (id: number) => {
@@ -51,7 +51,7 @@ const ArticalDisplayAll: React.FC = () => {
       break;
   }
 
-  const filteredArticles = Userselected
+  const sortedarticle = Userselected
     ? sortitem.filter((article) => article.sport.id === Userselected)
     : sortitem;
 
@@ -77,12 +77,12 @@ const ArticalDisplayAll: React.FC = () => {
       />
 
       <div className="flex flex-col gap-1">
-        {filteredArticles.length === 0 ? (
+        {sortedarticle.length === 0 ? (
           <span className="text-2xl flex font-bold   text-zinc-700 bg-[#c7e3e2] rounded-lg p-4 justify-center tracking-widest">
             No articles found for the selected sport 
           </span>
         ) : (
-          filteredArticles.map((articleData) => (
+          sortedarticle.map((articleData) => (
             <div
               key={articleData.id}
               className="p-4 mb-4 bg-[#c7e3e2] rounded-lg shadow-md"
