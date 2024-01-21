@@ -1,12 +1,13 @@
 import React from "react";
 import { useArticleState } from "../../context/article/context";
 import Gif from "../../assets/book.gif";
+import Modal from "./Modal";
 
 const ArticalDisplayAll: React.FC = () => {
   const state = useArticleState();
-  console.log("Component State:", state);
+  // console.log("Component State:", state);
   const { articlesData, loading, error, errorMsg } = state;
-  console.log("Articles received:", articlesData);
+  // console.log("Articles received:", articlesData);
 
   if (loading) {
     return (
@@ -19,6 +20,11 @@ const ArticalDisplayAll: React.FC = () => {
   if (error) {
     return <span>{errorMsg}</span>;
   }
+
+  const modelId = (id: number) => {
+    // console.log(id);
+    return <Modal id={id} />;
+  };
 
   return (
     <>
@@ -59,13 +65,7 @@ const ArticalDisplayAll: React.FC = () => {
                   </span>
                 </p>
                 <div className="flex justify-end">
-                  <button
-                    type="button"
-                    id=""
-                    className="rounded-md bg-blue-500 px-4 py-2 mt-2 text-sm font-medium text-white hover:bg-blue-600"
-                  >
-                    Read More
-                  </button>
+                  <div>{modelId(articleData.id)}</div>
                 </div>
               </div>
             </div>

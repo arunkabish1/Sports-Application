@@ -3,7 +3,7 @@ import { API_ENDPOINT } from "../../config/constants";
 export const fetchMatches = async (dispatch: any) => {
   const token = localStorage.getItem("authToken") || "";
 
-  console.log("Fetching matches...");
+  // console.log("Fetching matches...");
   dispatch({ type: "FETCH_EVENTS_REQUEST" });
 
   try {
@@ -19,9 +19,9 @@ export const fetchMatches = async (dispatch: any) => {
       console.error(`Failed to fetch matches. ${response.status}`);
     }
 
-    console.log("Matches fetched.");
+    // console.log("Matches fetched.");
     const data = await response.json();
-    console.log("Received data:", data);
+    // console.log("Received data:", data);
     dispatch({ type: "FETCH_EVENTS_SUCCESS", payload: data.matches });
   } catch (error) {
     console.error("Error while fetching matches:", error);

@@ -2,7 +2,7 @@ import { API_ENDPOINT } from "../../config/constants";
 
 export const fetchArticle = async (dispatch: any) => {
   const token = localStorage.getItem("authToken") || "";
-  console.log("Fetching article....");
+  // console.log("Fetching article....");
   dispatch({ type: "REQUEST_ARTICLES" });
 
   try {
@@ -24,7 +24,7 @@ export const fetchArticle = async (dispatch: any) => {
     }
 
     const articlesData = await response.json();
-    console.log("API Response:", articlesData);
+    // console.log("API Response:", articlesData);
 
     dispatch({ type: "RECEIVE_ARTICLES", payload: articlesData });
   } catch (error) {

@@ -11,7 +11,7 @@ const MatchDisplayAll: React.FC = () => {
     hasError: false,
     errorMsg: "",
   };
-  console.log("Events:", events);
+  // console.log("Events:", events);
 
   if (loading) {
     return <span>Loading...</span>;
@@ -22,10 +22,10 @@ const MatchDisplayAll: React.FC = () => {
   }
 
   const ongoingEvents = events.filter((event: any) => event.isRunning);
-  console.log("Running events:", ongoingEvents);
+  // console.log("Running events:", ongoingEvents);
 
   const modelId = (id: number) => {
-    console.log(id);
+    // console.log(id);
     return <Modal id={id} />;
   };
   return (
