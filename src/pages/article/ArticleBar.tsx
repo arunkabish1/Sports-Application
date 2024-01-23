@@ -9,16 +9,15 @@ interface Bar {
 
 const ArticleBar: React.FC<Bar> = ({ sportnames, Userselected, userSport, Orderchange }) => {
   const showAllSports = () => {
-    // Pass null to indicate that no sport is selected
     userSport(null);
   };
 
   return (
     <div className="flex justify-around mb-1 overflow-x-auto bg-[#c7e3e2] rounded-lg p-3">
-      <div className="rounded-lg px-5 py-1 bg-[#88c2c0]">
-        <label className="text-xl font-bold text-zinc-700 mr-3">Sort:</label>
+      <div className="rounded-lg px-5 mt-7 flex ">
+        <label className="text-xl font-bold text-zinc-700 mr-3 ">Sort:</label>
         <select
-          className="rounded-lg px-3 bg-[#88c2c0] text-zinc-700 hover:text-zinc-950 font-bold border-zinc-700 border"
+          className="rounded-lg px-3 bg-[#88c2c0] w-40 h-8 text-zinc-700 hover:text-zinc-950 font-bold border-zinc-700 border"
           onChange={(e) => Orderchange(e.target.value)}
         >
           <option value="date">Date</option>
@@ -26,6 +25,7 @@ const ArticleBar: React.FC<Bar> = ({ sportnames, Userselected, userSport, Orderc
           <option value="ZA">Z-A</option>
         </select>
       </div>
+    <div className="flex justify-around mb-1 overflow-x-auto bg-[#c7e3e2] rounded-lg p-3">
       <button
         className={`text-xl font-bold text-zinc-700 hover:text-zinc-900 ml-14 ${Userselected === null ? 'border-b-4 border-dotted  border-zinc-700' : ''}`}
         onClick={showAllSports}
@@ -41,6 +41,7 @@ const ArticleBar: React.FC<Bar> = ({ sportnames, Userselected, userSport, Orderc
           {sport.name}
         </button>
       ))}
+    </div>
     </div>
   );
 };
