@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Favoritebar from "./Favbar";
 import { useArticleState } from "../../context/article/context";
-import Modal from "/home/rog/sports/Sports-Application/src/pages/article/Modal.tsx";
+import Modal from "./Modal";
 
 const FavouriteDisplay: React.FC = () => {
   const [selectedPlay, setSelectedPlay] = useState<string | null>("");
