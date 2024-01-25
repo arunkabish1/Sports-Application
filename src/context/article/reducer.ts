@@ -9,6 +9,11 @@ interface ArticleData {
   };
   date: string;
   image: string;
+  teams:{
+    some(arg0: (team: any) => boolean): unknown;
+    id: number
+    name: string
+  }
 }
 export const initialArticleState: ArticleState = {
   articlesData: [],

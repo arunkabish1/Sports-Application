@@ -4,6 +4,7 @@ import Gif from "../../assets/book.gif";
 import Modal from "./Modal";
 import { API_ENDPOINT } from "../../config/constants";
 import ArticleBar from "./ArticleBar";
+import loadinggif from "../../assets/loading.gif";
 
 const ArticalDisplayAll: React.FC = () => {
   const state = useArticleState();
@@ -56,7 +57,9 @@ const ArticalDisplayAll: React.FC = () => {
     : sortitem;
 
   if (loading) {
-    return <span className="text-2xl font-semibold">Loading the articles</span>;
+    return <div>
+      <img className="flex justify-center" src={loadinggif}  />
+    </div>;
   }
 
   if (error) {

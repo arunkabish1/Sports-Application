@@ -6,69 +6,73 @@ import { API_ENDPOINT } from "../../config/constants";
 
 const MatchDisplayAll: React.FC = () => {
   const state = useEventsState();
-  const { events, loading, hasError, errorMsg } = state ?? {
+  const { events, hasError, errorMsg } = state ?? {
     events: [],
     loading: false,
     hasError: false,
     errorMsg: "",
   };
 
-  const [scoresbyId, setScoresbyId] = useState<Record<number, string>>({});
-  const [whenScoresloading, setWhenScores] = useState(true);
+  const [scoresById, setScoresById] = useState<Record<number, string>>({});
+  const [scoresLoading, setScoresLoading] = useState(true);
 
-  const fetchScoresbyId = async () => {
-    setWhenScores(true);
+  const fetchScoresById = async () => {
+    setScoresLoading(true);
 
     const fetchPromises = events.map(async (event) => {
       try {
         const response = await fetch(`${API_ENDPOINT}/matches/${event.id}`);
         const data = await response.json();
-        setScoresbyId((prevScores) => ({ ...prevScores, [event.id]: data.score }));
+        setScoresById((prevScores) => ({
+          ...prevScores,
+          [event.id]: data.score,
+        }));
       } catch (error) {
-        console.error(`when Fetching Error${event.id}`, error);
+        console.error(`Error fetching scores for event ${event.id}`, error);
       }
     });
 
     try {
       await Promise.all(fetchPromises);
     } catch (error) {
-      console.error("promise error", error);
+      console.error("Promise error", error);
     } finally {
-      setWhenScores(false);
+      setScoresLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchScoresbyId();
+    fetchScoresById();
   }, [events]);
 
-  const handlelivescore = () => {
-    fetchScoresbyId();
+  const handleLiveScore = () => {
+    if(events.filter((event: any) => event.isRunning)){
+      fetchScoresById();
+    }
+    
   };
-
-  if (loading) {
-    return <span>Loading</span>;
-  }
-
   if (hasError) {
     return <span>{errorMsg}</span>;
   }
 
-  const ongoingEvents = events.filter((event: any) => event.isRunning);
+  const liveMatches = events.filter((event: any) => event.isRunning);
+  const endedMatches = events.filter((event: any) => !event.isRunning);
 
   return (
-    <div className="ml-5 mt-5">
-      <div className="flex flex-row gap-2 ml-1 mt-3">
+    <div className="mt-5">
+      <div className="flex flex-row gap-2 mt-3">
         <img className="h-9" src={Scoreboard} alt="Scoreboard" />
         <h1 className="text-2xl font-bold">Live Score</h1>
       </div>
-      <div className="flex gap-8 overflow-x-auto">
-        {ongoingEvents.map((event: any) => (
+      <div className="flex overflow-x-auto">
+        {liveMatches.map((event: any) => (
           <div key={event.id} className="p-2">
-            <div className="w-96 p-4 bg-[#c7e3e2] border border-gray-400 rounded-lg shadow-md text-grey-100 hover:bg-gray-300 cursor-pointer">
+            <div style={innerWidth > 768 ? { width: "350px" } : { width: "100%" }} className=" p-4 bg-[#c7e3e2] border  border-gray-400 rounded-lg shadow-md text-grey-100 hover:bg-gray-300 cursor-pointer">
               <div className="flex justify-between">
                 <h5 className="mb-1 text-xl">
-                  <span className="mb-2 text-black font-bold bg-[#88c2c0] px-2 rounded-lg">{event.sportName}</span>
+                  <span className="mb-2 text-black font-bold bg-[#88c2c0] px-2 rounded-lg">
+                    {event.sportName}
+                  </span>
                 </h5>
               </div>
               <p className="mb-2 font-medium tracking-tight">
@@ -76,21 +80,81 @@ const MatchDisplayAll: React.FC = () => {
                   {event.name && event.name.split("at")[0]}
                 </span>
                 <div className=" bg-[#88c2c0] rounded-lg p-1">
-                  <p className="font-bold text-xl text-black">Score</p>
+                  <div className="flex justify-between">
+                    <p className="font-bold text-xl text-black">Score</p>
+                    <span className="text-red-600 font-bold">Live Match</span>
+                  </div>
                   <p className="p-1">
                     <span>
-                      {event.teams[0].name}: {whenScoresloading ? 'Loading...' : (scoresbyId[event.id] && `${scoresbyId[event.id][event.teams[0].name]}`)}
+                      {event.teams[0].name}:{" "}
+                      {scoresLoading
+                        ? "Loading..."
+                        : scoresById[event.id] &&
+                          `${scoresById[event.id][event.teams[0].name]}`}
                     </span>
                     <br />
                     <span>
-                      {event.teams[1].name}: {whenScoresloading ? 'Loading...' : (scoresbyId[event.id] && `${scoresbyId[event.id][event.teams[1].name]}`)}
+                      {event.teams[1].name}:{" "}
+                      {scoresLoading
+                        ? "Loading..."
+                        : scoresById[event.id] &&
+                          `${scoresById[event.id][event.teams[1].name]}`}
                     </span>
                   </p>
                 </div>
                 <div className="flex justify-between">
-                <button className="rounded-md bg-blue-500 px-4 py-2 mt-2 text-sm font-medium text-white hover:bg-blue-600" onClick={handlelivescore}>
-          Refresh Score
-        </button>
+                  <button
+                    className="rounded-md bg-blue-500 px-4 py-2 mt-2 text-sm font-medium text-white hover:bg-blue-600"
+                    onClick={handleLiveScore}
+                  >
+                    Refresh Score
+                  </button>
+                  <Modal id={event.id} />
+                </div>
+              </p>
+            </div>
+          </div>
+        ))}
+        {/* Render ended matches */}
+        {endedMatches.map((event: any) => (
+          <div key={event.id} className="p-2">
+            <div style={innerWidth > 768 ? { width: "350px" } : { width: "100%" }} className=" p-4 bg-[#c7e3e2] border border-gray-400 rounded-lg shadow-md text-grey-100 hover:bg-gray-300 cursor-pointer">
+              <div className="flex justify-between">
+                <h5 className="mb-1 text-xl">
+                  <span className="mb-2 text-black font-bold bg-[#88c2c0] px-2 rounded-lg">
+                    {event.sportName}
+                  </span>
+                </h5>
+              </div>
+              <p className="mb-2 font-medium tracking-tight">
+                <span className="font-bold text-zinc-800 bg-[#88c2c0] px-2 rounded-lg">
+                  {event.name && event.name.split("at")[0]}
+                </span>
+
+                <div className=" bg-[#88c2c0] rounded-lg p-1">
+                  <div className="flex justify-between">
+                    <p className="font-bold text-xl text-black">Score</p>
+                    <span className="text-gray-600 font-bold">Match Ended</span>
+                  </div>
+                  <p className="p-1">
+                    <span>
+                      {event.teams[0].name}:{" "}
+                      {scoresLoading
+                        ? "Loading..."
+                        : scoresById[event.id] &&
+                          `${scoresById[event.id][event.teams[0].name]}`}
+                    </span>
+                    <br />
+                    <span>
+                      {event.teams[1].name}:{" "}
+                      {scoresLoading
+                        ? "Loading..."
+                        : scoresById[event.id] &&
+                          `${scoresById[event.id][event.teams[1].name]}`}
+                    </span>
+                  </p>
+                </div>
+                <div className="flex justify-between">
                   <Modal id={event.id} />
                 </div>
               </p>

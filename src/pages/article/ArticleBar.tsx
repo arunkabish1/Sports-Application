@@ -14,7 +14,7 @@ const ArticleBar: React.FC<Bar> = ({ sportnames, Userselected, userSport, Orderc
 
   return (
     <div className="flex justify-around mb-1 overflow-x-auto bg-[#c7e3e2] rounded-lg p-3">
-      <div className="rounded-lg px-5 mt-7 flex ">
+      <div className="rounded-lg px-5 mt-3 flex ">
         <label className="text-xl font-bold text-zinc-700 mr-3 ">Sort:</label>
         <select
           className="rounded-lg px-3 bg-[#88c2c0] w-40 h-8 text-zinc-700 hover:text-zinc-950 font-bold border-zinc-700 border"

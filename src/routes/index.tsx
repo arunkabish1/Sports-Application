@@ -3,6 +3,7 @@ import Logout from "../pages/logout";
 import Signin from "../pages/signin";
 import Signup from "../pages/signup";
 import Scorepanel from "../pages/scorepanel";
+import NotFound from "../pages/notfound";
 
 const router = createBrowserRouter([
   { path: "/", element: <Navigate to="/scorepanel" replace /> },
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
     path: "/logout",
     element: <Logout />,
   },
+  {
+    path:"/notfound",
+    element: <NotFound />
+  }
 ]);
 
 export default router;

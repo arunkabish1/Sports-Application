@@ -4,7 +4,7 @@ import ArticleDisplay from "./ArticalDisplay";
 const Article: React.FC = () => {
   return (
     <>
-      <div className="w-3/4 ml-7 ">
+      <div className="col-span-3">
         <ArticleDisplay />
       </div>
     </>
