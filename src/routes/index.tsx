@@ -4,6 +4,7 @@ import Signin from "../pages/signin";
 import Signup from "../pages/signup";
 import Scorepanel from "../pages/scorepanel";
 import NotFound from "../pages/notfound";
+import ChangePasswordForm from "../pages/changepass/passwordchange";
 
 const router = createBrowserRouter([
   { path: "/", element: <Navigate to="/scorepanel" replace /> },
@@ -26,6 +27,14 @@ const router = createBrowserRouter([
   {
     path:"/notfound",
     element: <NotFound />
+  },
+  {
+    path: "*",
+    element: <Navigate to="/notfound" replace />
+  },
+  {
+    path:"passwordchange",
+    element: <ChangePasswordForm/>
   }
 ]);
 
