@@ -2,31 +2,25 @@ import React, { useEffect, useState } from "react";
 import { useArticleState } from "../../context/article/context";
 import Gif from "../../assets/book.gif";
 import Modal from "./Modal";
-import { API_ENDPOINT } from "../../config/constants";
 import ArticleBar from "./ArticleBar";
 import loadinggif from "../../assets/loading.gif";
+import { fetchUserPreferences } from "../../context/preference/action"; 
+import { useFetchSports } from "../../context/sports/action";
 
 const ArticalDisplayAll: React.FC = () => {
   const state = useArticleState();
   const { articlesData, loading, error, errorMsg } = state;
+  const [userPreferences, setUserPreferences] = useState<any>(null);
 
-  const [sport, setSport] = useState([]);
+  useEffect(() => {
+    // Fetch user preferences when component mounts
+    fetchUserPreferences(setUserPreferences);
+  }, []);
+
+  const { sports } = useFetchSports();
   const [Userselected, setUserselected] = useState<number | null>(null);
   const [Option, setOption] = useState("date");
 
-  useEffect(() => {
-    const fetchSports = async () => {
-      try {
-        const response = await fetch(`${API_ENDPOINT}/sports`);
-        const data = await response.json();
-        setSport(data.sports);
-      } catch (error) {
-        console.error("Error fetching sports:", error);
-      }
-    };
-
-    fetchSports();
-  }, []);
 
   const modelId = (id: number) => {
     return <Modal id={id} />;
@@ -73,7 +67,7 @@ const ArticalDisplayAll: React.FC = () => {
         <h1 className="text-2xl font-bold">Trending Articles</h1>
       </div>
       <ArticleBar
-        sportnames={sport}
+        sportnames={sports}
         Userselected={Userselected}
         userSport={(UserselectedId: number | null) => setUserselected(UserselectedId)}
         Orderchange={handleSortChange}

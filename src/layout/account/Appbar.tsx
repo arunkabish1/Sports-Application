@@ -1,16 +1,25 @@
-import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { UserCircleIcon, CogIcon } from "@heroicons/react/24/outline";
 import logo from "../../assets/logo.png";
+import { Fragment, useState } from "react";
+import PreferencesForm from "../../pages/preference/PreferencesForm";
 
-const Navigation = [
-  { name: "Sign out", href: "/logout" },
-];
+const Navigation = [{ name: "Sign out", href: "/logout" }];
 
 const classNames = (...classes: string[]): string =>
   classes.filter(Boolean).join(" ");
 
 const Appbar = () => {
+  const [showPreferencesModal, setShowPreferencesModal] = useState(false);
+
+  const openPreferencesModal = () => {
+    setShowPreferencesModal(true);
+  };
+
+  const closePreferencesModal = () => {
+    setShowPreferencesModal(false);
+  };
+
   return (
     <>
       <Disclosure as="nav" className="border-b border-slate-200">
@@ -22,9 +31,14 @@ const Appbar = () => {
                   <img src={logo} alt="Logo" className="h-10" />
                 </div>
                 <div className="hidden md:flex items-center space-x-4">
-                  <div className="mr-4">
-                    <CogIcon className="h-6 w-6 text-white cursor-pointer" />
-                  </div>
+                  <button
+                    onClick={openPreferencesModal}
+                    className="text-white hover:text-blue-600 focus:outline-none"
+                  >
+                    <div className="mr-4">
+                      <CogIcon className="h-6 w-6 text-white cursor-pointer" />
+                    </div>
+                  </button>
                   <Menu as="div" className="relative">
                     <div>
                       <Menu.Button className="rounded-full bg-white p-1 text-gray-400 hover:text-blue-600">
@@ -68,6 +82,9 @@ const Appbar = () => {
           </div>
         )}
       </Disclosure>
+      {showPreferencesModal && (
+        <PreferencesForm onClose={closePreferencesModal} />
+      )}
     </>
   );
 };
