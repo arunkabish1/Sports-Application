@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Transition } from "@headlessui/react";
 import { patchUserPreferences } from "../../context/preference/action";
 import { useUserPreferences } from "../../context/preference/context";
-import { useFavState } from "../../context/fav/fav-context";
+import { useFavState } from "../../context/fav/context";
 import { useFetchSports } from "../../context/sports/action";
 import { fetchUserPreferences } from "../../context/preference/action";
 
@@ -51,6 +51,7 @@ function PreferencesForm({ onClose }) {
       await patchUserPreferences(preferenceDispatch, selectedSports, selectedTeams);
       console.log('Selected sports:', selectedSports);
       console.log("Selected teams:", selectedTeams);
+      window.location.reload();
       closeModal();
     } catch (error) {
       console.error("Error saving preferences:", error);
@@ -100,10 +101,10 @@ function PreferencesForm({ onClose }) {
                               <div key={sport.id} className="flex items-center">
                                 <input
                                   id={`sport-${sport.id}`}
-                                  name={`sport-${sport.id}`}
+                                  name={`sport-${sport.name}`}
                                   type="checkbox"
-                                  checked={selectedSports.includes(sport.id)}
-                                  onChange={() => handleSportChange(sport.id)}
+                                  checked={selectedSports.includes(sport.name)}
+                                  onChange={() => handleSportChange(sport.name)}
                                   className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
                                 />
                                 <label
@@ -125,10 +126,10 @@ function PreferencesForm({ onClose }) {
                               <div key={team.id} className="flex items-center">
                                 <input
                                   id={`team-${team.id}`}
-                                  name={`team-${team.id}`}
+                                  name={`team-${team.name}`}
                                   type="checkbox"
-                                  checked={selectedTeams.includes(team.id)}
-                                  onChange={() => handleTeamChange(team.id)}
+                                  checked={selectedTeams.includes(team.name)}
+                                  onChange={() => handleTeamChange(team.name)}
                                   className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
                                 />
                                 <label

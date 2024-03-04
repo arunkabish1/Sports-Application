@@ -45,13 +45,23 @@ const SigninForm: React.FC = () => {
       <div className="flex-1 h-full max-w-4xl mx-auto bg-white rounded-lg shadow-xl">
         <div className="flex flex-col md:flex-row">
           <div className="h-32 flex flex-col justify-center gap-10 md:h-auto md:w-1/2">
-            <h1 className="text-2xl font-bold text-center text-gray-700">Welcome to ScoreChecker</h1>
-            <p className="text-center font-bold text-gray-500">With ScoreChecker, you can track your personalized favorite sports and get live score</p>
+            <h1 className="text-2xl font-bold text-center text-gray-700">
+              Welcome to ScoreChecker
+            </h1>
+            <a
+              className="text-center font-bold text-gray-500 hover:text-gray-900"
+              href="scorepanel"
+            >
+              Get live score Now
+            </a>
+            <p className="text-center font-bold text-gray-500">
+              With ScoreChecker, you can track your personalized favorite sports
+              and get live score
+            </p>
           </div>
           <div className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
             <div className="w-full">
-              <div className="flex justify-center">
-              </div>
+              <div className="flex justify-center"></div>
               <h1 className="mb-4 text-2xl font-bold text-center text-gray-700">
                 Sign in
               </h1>
@@ -88,7 +98,10 @@ const SigninForm: React.FC = () => {
               <div className="mt-4 text-center">
                 <p className="text-sm">
                   Don't have an account yet?
-                  <a href="signup" className="ml-1 text-zinc-600 hover:underline">
+                  <a
+                    href="signup"
+                    className="ml-1 text-zinc-600 hover:underline"
+                  >
                     Sign up.
                   </a>
                 </p>

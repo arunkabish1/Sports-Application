@@ -13,13 +13,55 @@ const MatchDisplayAll: React.FC = () => {
     errorMsg: "",
   };
 
+  const [userSportsPreferences, setUserSportsPreferences] = useState<string[]>([]);
+  const [userTeamPreferences, setUserTeamPreferences] = useState<string[]>([]);
+  const [filteredEvents, setFilteredEvents] = useState<any[]>([]);
   const [scoresById, setScoresById] = useState<Record<number, string>>({});
   const [scoresLoading, setScoresLoading] = useState(true);
+
+  useEffect(() => {
+     const fetchUserPreferences = async () => {
+      const token = localStorage.getItem("authToken") ?? "";
+
+      try {
+        const response = await fetch(`${API_ENDPOINT}/user/preferences`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await response.json();
+        console.log("User preferences data:", data);
+
+        const preferredSports = data.preferences?.sports || [];
+        const preferredTeams = data.preferences?.teams || [];
+
+        setUserSportsPreferences(preferredSports);
+        setUserTeamPreferences(preferredTeams);
+      } catch (error) {
+        console.error("Error fetching user preferences:", error);
+      }
+    };
+
+    fetchUserPreferences();
+  }, []);
+
+  useEffect(() => {
+    if (userSportsPreferences.length === 0 && userTeamPreferences.length === 0) {
+      setFilteredEvents(events);
+    } else {
+      const filteredEvents = events.filter(event =>
+        userSportsPreferences.includes(event.sportName) ||
+        event.teams.some(team => userTeamPreferences.includes(team.name))
+      );
+      setFilteredEvents(filteredEvents);
+    }
+  }, [events, userSportsPreferences, userTeamPreferences]);
 
   const fetchScoresById = async () => {
     setScoresLoading(true);
 
-    const fetchPromises = events.map(async (event) => {
+    const fetchPromises = filteredEvents.map(async (event) => {
       try {
         const response = await fetch(`${API_ENDPOINT}/matches/${event.id}`);
         const data = await response.json();
@@ -43,20 +85,20 @@ const MatchDisplayAll: React.FC = () => {
 
   useEffect(() => {
     fetchScoresById();
-  }, [events]);
+  }, [filteredEvents]);
 
   const handleLiveScore = () => {
-    if(events.filter((event: any) => event.isRunning)){
+    if (filteredEvents.filter((event: any) => event.isRunning)) {
       fetchScoresById();
     }
-    
   };
+
   if (hasError) {
     return <span>{errorMsg}</span>;
   }
 
-  const liveMatches = events.filter((event: any) => event.isRunning);
-  const endedMatches = events.filter((event: any) => !event.isRunning);
+  const liveMatches = filteredEvents.filter((event: any) => event.isRunning);
+  const endedMatches = filteredEvents.filter((event: any) => !event.isRunning);
 
   return (
     <div className="mt-5">
@@ -67,7 +109,10 @@ const MatchDisplayAll: React.FC = () => {
       <div className="flex overflow-x-auto">
         {liveMatches.map((event: any) => (
           <div key={event.id} className="p-2">
-            <div style={innerWidth > 768 ? { width: "350px" } : { width: "100%" }} className=" p-4 bg-[#c7e3e2] border  border-gray-400 rounded-lg shadow-md text-grey-100 hover:bg-gray-300 cursor-pointer">
+            <div
+              style={innerWidth > 768 ? { width: "350px" } : { width: "100%" }}
+              className=" p-4 bg-[#c7e3e2] border  border-gray-400 rounded-lg shadow-md text-grey-100 hover:bg-gray-300 cursor-pointer"
+            >
               <div className="flex justify-between">
                 <h5 className="mb-1 text-xl">
                   <span className="mb-2 text-black font-bold bg-[#88c2c0] px-2 rounded-lg">
@@ -118,7 +163,10 @@ const MatchDisplayAll: React.FC = () => {
         {/* Render ended matches */}
         {endedMatches.map((event: any) => (
           <div key={event.id} className="p-2">
-            <div style={innerWidth > 768 ? { width: "350px" } : { width: "100%" }} className=" p-4 bg-[#c7e3e2] border border-gray-400 rounded-lg shadow-md text-grey-100 hover:bg-gray-300 cursor-pointer">
+            <div
+              style={innerWidth > 768 ? { width: "350px" } : { width: "100%" }}
+              className=" p-4 bg-[#c7e3e2] border border-gray-400 rounded-lg shadow-md text-grey-100 hover:bg-gray-300 cursor-pointer"
+            >
               <div className="flex justify-between">
                 <h5 className="mb-1 text-xl">
                   <span className="mb-2 text-black font-bold bg-[#88c2c0] px-2 rounded-lg">

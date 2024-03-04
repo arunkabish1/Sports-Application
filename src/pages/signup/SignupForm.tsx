@@ -20,7 +20,7 @@ const SignupForm: React.FC = () => {
     const emailcontains = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailcontains.test(Email)) {
       setError("Please enter a valid email address");
-      return
+      return;
     }
 
     try {
@@ -57,6 +57,13 @@ const SignupForm: React.FC = () => {
             <h1 className="text-2xl  font-bold text-center text-gray-700">
               Welcome to ScoreChecker
             </h1>
+            <a
+              className="text-center font-bold text-gray-500 hover:text-gray-900"
+              href="scorepanel"
+            >
+              Get live score Now
+            </a>
+
             <p className="text-center font-bold text-gray-500">
               With ScoreChecker, you can track your personalized favorite sports
               and get live score

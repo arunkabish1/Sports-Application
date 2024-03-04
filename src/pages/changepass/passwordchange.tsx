@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { API_ENDPOINT } from "../../config/constants";
 import { useNavigate } from "react-router-dom";
+import { API_ENDPOINT } from "../../config/constants";
 
 const PasswordForm: React.FC = () => {
   const [cPass, setCPass] = useState("");
@@ -12,14 +12,12 @@ const PasswordForm: React.FC = () => {
     event.preventDefault();
 
     if (!cPass || !newPass) {
-      setError("Must be filled in all fields");
+      setError("Please fill in all fields");
       return;
     }
 
-    console.log(cPass);
-    console.log(newPass);
     const authToken = localStorage.getItem("authToken");
-    // console.log(authToken)
+
     try {
       const response = await fetch(`${API_ENDPOINT}/user/password`, {
         method: "PATCH",
@@ -34,49 +32,59 @@ const PasswordForm: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error("response!ok");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Password change failed");
       }
 
-      console.log("successful");
+      console.log("Password change is successful");
       navigate("/scorepanel");
     } catch (error) {
-      setError(`failed: ${error}`);
+      setError(`Password change failed: ${error}`);
     }
   };
 
   return (
-    <div className="border  rounded-lg bg-[#f5f5f5] w-1/4 py-10  px-20 mx-auto">
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label className="block text-zinc-700 font-semibold mb-2">
-            Current Password:
-          </label>
-          <input
-            type="password"
-            value={cPass}
-            onChange={(e) => setCPass(e.target.value)}
-            className="w-full border rounded-md py-2 px-3 text-zinc-700 leading-tight focus:outline-none focus:border-zinc-500 focus:shadow-outline-blue"
-          />
+    <div className="flex items-center min-h-screen bg-[#c7e3e2]">
+      <div className="flex-1 h-full max-w-4xl mx-auto bg-white rounded-lg shadow-xl">
+        <div className="flex items-center justify-center p-6 sm:p-12">
+          <div className="w-full">
+            <div className="flex justify-center">
+              <h1 className="mb-4 text-2xl font-bold text-center text-gray-700">
+                Change Password
+              </h1>
+            </div>
+            <form onSubmit={handleSubmit}>
+              <div>
+                <label className="block text-sm">Current Password</label>
+                <input
+                  type="password"
+                  value={cPass}
+                  onChange={(e) => setCPass(e.target.value)}
+                  className="w-full px-4 py-2 mt-1 text-sm border rounded-md focus:border-zinc-400 focus:outline-none focus:ring-1 focus:ring-zinc-600"
+                  placeholder="Current Password"
+                />
+              </div>
+              <div>
+                <label className="block mt-4 text-sm">New Password</label>
+                <input
+                  type="password"
+                  value={newPass}
+                  onChange={(e) => setNewPass(e.target.value)}
+                  className="w-full px-4 py-2 mt-1 text-sm border rounded-md focus:border-zinc-400 focus:outline-none focus:ring-1 focus:ring-zinc-600"
+                  placeholder="New Password"
+                />
+              </div>
+              <button
+                type="submit"
+                className="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-zinc-900 transition-colors duration-150 bg-[#c7e3e2] border border-transparent rounded-lg active:bg-zinc-600 hover:bg-zinc-700 focus:outline-none focus:shadow-outline-zinc"
+              >
+                Change Password
+              </button>
+            </form>
+            {error && <div className="mt-4 text-red-500">{error}</div>}
+          </div>
         </div>
-        <div>
-          <label className="block text-gray-700 font-semibold mb-2">
-            New Password:
-          </label>
-          <input
-            type="password"
-            value={newPass}
-            onChange={(e) => setNewPass(e.target.value)}
-            className="w-full border rounded-md py-2 px-3 text-zinc-700 leading-tight focus:outline-none focus:border-zinc-500 focus:shadow-outline-blue"
-          />
-        </div>
-        <button
-          type="submit"
-          className="w-full bg-[#c7e3e2] hover:bg-[#7c8a8a] text-black font-semibold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-blue mt-4"
-        >
-          Change Password
-        </button>
-        {error && <div className="text-red-500">{error}</div>}
-      </form>
+      </div>
     </div>
   );
 };

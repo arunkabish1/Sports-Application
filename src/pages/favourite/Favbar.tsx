@@ -3,7 +3,7 @@ import {
   useFavState,
   useFavDispatch,
   TeamInfo,
-} from "../../context/fav/fav-context";
+} from "../../context/fav/context";
 import { API_ENDPOINT } from "../../config/constants";
 
 const Favoritebar: React.FC<{

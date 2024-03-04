@@ -20,9 +20,6 @@ export const SportsProvider: React.FC = ({ children }) => {
 
 export const useSportsState = () => {
   const context = useContext(SportsContext);
-  if (context === undefined) {
-    throw new Error('useSportsState must be used within a SportsProvider');
-  }
   return context.state;
 };
 

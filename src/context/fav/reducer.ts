@@ -4,7 +4,7 @@ export interface TeamInfo {
     plays: string;
   }
   
-  interface FavState {
+  export interface FavState {
     favoriteTeams: TeamInfo[];
   }
   

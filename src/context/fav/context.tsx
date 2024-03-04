@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useReducer, useEffect } from "react";
 import { API_ENDPOINT } from "../../config/constants";
-import { favReducer, initialFavState, FavState, FavActions } from "./reducer";
+import { favReducer, initialFavState, FavState, FavActions, TeamInfo } from "./reducer";
 
 const FavStateContext = createContext<FavState | undefined>(undefined);
 type FavDispatch = React.Dispatch<FavActions>;
