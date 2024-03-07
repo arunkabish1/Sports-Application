@@ -3,11 +3,12 @@ import { useEventsState } from "../../context/match/context";
 import Scoreboard from "../../assets/scoreboard.gif";
 import Modal from "./Modal";
 import { API_ENDPOINT } from "../../config/constants";
+import FetchUserPreferences from "../preference/Fetch";
 
 const MatchDisplayAll: React.FC = () => {
   const state = useEventsState();
   const { events, hasError, errorMsg } = state ?? {
-    events: [],
+    events: [], 
     loading: false,
     hasError: false,
     errorMsg: "",
@@ -19,32 +20,13 @@ const MatchDisplayAll: React.FC = () => {
   const [scoresById, setScoresById] = useState<Record<number, string>>({});
   const [scoresLoading, setScoresLoading] = useState(true);
 
-  useEffect(() => {
-     const fetchUserPreferences = async () => {
-      const token = localStorage.getItem("authToken") ?? "";
+  const handleFetchPreferences = (preferences: any) => {
+    const preferredSports = preferences?.sports || [];
+    const preferredTeams = preferences?.teams || [];
 
-      try {
-        const response = await fetch(`${API_ENDPOINT}/user/preferences`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const data = await response.json();
-        console.log("User preferences data:", data);
-
-        const preferredSports = data.preferences?.sports || [];
-        const preferredTeams = data.preferences?.teams || [];
-
-        setUserSportsPreferences(preferredSports);
-        setUserTeamPreferences(preferredTeams);
-      } catch (error) {
-        console.error("Error fetching user preferences:", error);
-      }
-    };
-
-    fetchUserPreferences();
-  }, []);
+    setUserSportsPreferences(preferredSports);
+    setUserTeamPreferences(preferredTeams);
+  };
 
   useEffect(() => {
     if (userSportsPreferences.length === 0 && userTeamPreferences.length === 0) {
@@ -160,7 +142,6 @@ const MatchDisplayAll: React.FC = () => {
             </div>
           </div>
         ))}
-        {/* Render ended matches */}
         {endedMatches.map((event: any) => (
           <div key={event.id} className="p-2">
             <div
@@ -210,6 +191,7 @@ const MatchDisplayAll: React.FC = () => {
           </div>
         ))}
       </div>
+      <FetchUserPreferences onFetchPreferences={handleFetchPreferences} />
     </div>
   );
 };

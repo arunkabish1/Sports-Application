@@ -1,26 +1,19 @@
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { UserCircleIcon, CogIcon } from "@heroicons/react/24/outline";
 import logo from "../../assets/logo.png";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import PreferencesForm from "../../pages/preference/PreferencesForm";
-
-const token = localStorage.getItem("authToken");
-
-const Navigation = token
-  ? [
-      { name: "Sign Out", href: "/logout" },
-      { name: "Change Password", href: "/passwordchange" },
-    ]
-  : [
-      { name: "Sign In", href: "/signin" },
-      { name: "Sign Up", href: "/signup" },
-    ];
-
-const classNames = (...classes: string[]): string =>
-  classes.filter(Boolean).join(" ");
 
 const Appbar = () => {
   const [showPreferencesModal, setShowPreferencesModal] = useState(false);
+  const [token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+    if (authToken) {
+      setToken(authToken);
+    }
+  }, []);
 
   const openPreferencesModal = () => {
     setShowPreferencesModal(true);
@@ -29,6 +22,19 @@ const Appbar = () => {
   const closePreferencesModal = () => {
     setShowPreferencesModal(false);
   };
+
+  const Navigation = token
+    ? [
+        { name: "Sign Out", href: "/logout" },
+        { name: "Change Password", href: "/passwordchange" },
+      ]
+    : [
+        { name: "Sign In", href: "/signin" },
+        { name: "Sign Up", href: "/signup" },
+      ];
+
+  const classNames = (...classes: string[]): string =>
+    classes.filter(Boolean).join(" ");
 
   return (
     <div>

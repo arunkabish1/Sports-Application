@@ -58,10 +58,13 @@ const SignupForm: React.FC = () => {
               Welcome to ScoreChecker
             </h1>
             <a
-              className="text-center font-bold text-gray-500 hover:text-gray-900"
+              className="text-center rounded-md font-bold text-black hover:text-gray-900"
               href="scorepanel"
             >
-              Get live score Now
+             <p className="text-center  font-bold text-gray-500">
+             Want to Continue Without Signin click here
+              </p> 
+              Get live score Now !
             </a>
 
             <p className="text-center font-bold text-gray-500">

@@ -12,7 +12,7 @@ function PreferencesForm({ onClose }) {
   const [selectedTeams, setSelectedTeams] = useState<number[]>([]);
   const { dispatch: preferenceDispatch } = useUserPreferences();
   const favState = useFavState();
-  const { sports: sportsDataList, isLoading: isLoadingSports, isError: isErrorSports } = useFetchSports();
+  const { sports: sportsDataList } = useFetchSports();
 
   useEffect(() => {
     const fetchInitialData = async () => {

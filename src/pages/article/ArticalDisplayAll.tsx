@@ -10,17 +10,18 @@ import { useFetchSports } from "../../context/sports/action";
 const ArticalDisplayAll: React.FC = () => {
   const state = useArticleState();
   const { articlesData, loading, error, errorMsg } = state;
-  const [userPreferences, setUserPreferences] = useState<any>(null);
-
-  useEffect(() => {
-    // Fetch user preferences when component mounts
-    fetchUserPreferences(setUserPreferences);
-  }, []);
-
   const { sports } = useFetchSports();
   const [Userselected, setUserselected] = useState<number | null>(null);
   const [Option, setOption] = useState("date");
+  const [userPreferences, setUserPreferences] = useState<any>(null);
+  const [articleBarLoading, setArticleBarLoading] = useState<boolean>(true);
 
+  useEffect(() => {
+    fetchUserPreferences((data) => {
+      setUserPreferences(data);
+      setArticleBarLoading(false);
+    });
+  }, []);
 
   const modelId = (id: number) => {
     return <Modal id={id} />;
@@ -47,13 +48,25 @@ const ArticalDisplayAll: React.FC = () => {
   }
 
   const filteredArticles = Userselected
-    ? sortitem.filter((article) => article.sport.id === Userselected)
-    : sortitem;
+  ? sortitem.filter((article) => {
+      if (Array.isArray(Userselected)) {
+        return Userselected.includes(article.sport.id);
+      } else {
+        return article.sport.id === Userselected;
+      }
+    })
+  : sortitem;
+
+  if (articleBarLoading) {
+    return (
+      <div>
+        <img className="flex justify-center" src={loadinggif} alt="Loading" />
+      </div>
+    );
+  }
 
   if (loading) {
-    return <div>
-      <img className="flex justify-center" src={loadinggif}  />
-    </div>;
+    return <div>Loading...</div>;
   }
 
   if (error) {
@@ -75,7 +88,7 @@ const ArticalDisplayAll: React.FC = () => {
 
       <div className="flex flex-col gap-1">
         {filteredArticles.length === 0 ? (
-          <span className="text-2xl flex font-bold   text-zinc-700 bg-[#c7e3e2] rounded-lg p-3 justify-center track">
+          <span className="text-2xl flex font-bold text-zinc-700 bg-[#c7e3e2] rounded-lg p-3 justify-center track">
             No articles found for the selected sport 
           </span>
         ) : (
