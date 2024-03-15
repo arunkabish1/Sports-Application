@@ -1,3 +1,4 @@
+import { Suspense} from "react";
 import { RouterProvider } from "react-router-dom";
 import router from "./routes";
 import { EventsProvider } from "./context/match/context";
@@ -11,7 +12,9 @@ const App = () => {
       <ArticleProvider>
       <FavProvider>
       <EventsProvider> 
-        <RouterProvider router={router} />
+      <Suspense fallback={<>Loading...</>}>
+            <RouterProvider router={router} />
+          </Suspense>
       </EventsProvider>
       </FavProvider>
       </ArticleProvider>

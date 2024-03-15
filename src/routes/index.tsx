@@ -1,10 +1,14 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import Logout from "../pages/logout";
-import Signin from "../pages/signin";
-import Signup from "../pages/signup";
-import Scorepanel from "../pages/scorepanel";
-import NotFound from "../pages/notfound";
-import ChangePasswordForm from "../pages/changepass/passwordchange";
+import React from "react";
+import ProtectedRoute from "./ProtectedRoute";
+const Logout = React.lazy(() => import("../pages/logout"));
+const Scorepanel = React.lazy(() => import("../pages/scorepanel"));
+const Signin = React.lazy(() => import("../pages/signin"));
+const Signup = React.lazy(() => import("../pages/signup"));
+const NotFound = React.lazy(() => import("../pages/notfound"));
+const ChangePasswordForm = React.lazy(
+  () => import("../pages/changepass/passwordchange")
+);
 
 const router = createBrowserRouter([
   { path: "/", element: <Navigate to="/scorepanel" replace /> },
@@ -25,17 +29,21 @@ const router = createBrowserRouter([
     element: <Logout />,
   },
   {
-    path:"/notfound",
-    element: <NotFound />
+    path: "/notfound",
+    element: <NotFound />,
+  },
+  {
+    path: "/passwordchange",
+    element: (
+      <ProtectedRoute>
+        <ChangePasswordForm />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "*",
-    element: <Navigate to="/notfound" replace />
+    element: <Navigate to="/notfound" replace />,
   },
-  {
-    path:"passwordchange",
-    element: <ChangePasswordForm/>
-  }
 ]);
 
 export default router;
