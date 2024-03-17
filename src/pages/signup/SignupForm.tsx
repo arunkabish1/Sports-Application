@@ -3,23 +3,23 @@ import { useNavigate } from "react-router-dom";
 import { API_ENDPOINT } from "../../config/constants";
 
 const SignupForm: React.FC = () => {
-  const [Name, setName] = useState("");
-  const [Email, setEmail] = useState("");
-  const [pass, setpass] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!Name || !Email || !pass) {
+    if (!name || !email || !password) {
       setError("Please fill in all fields");
       return;
     }
 
-    const emailcontains = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailcontains.test(Email)) {
-      setError("Please enter a valid email address");
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email id");
       return;
     }
 
@@ -27,16 +27,18 @@ const SignupForm: React.FC = () => {
       const response = await fetch(`${API_ENDPOINT}/users`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: Name,
-          email: Email,
-          password: pass,
-        }),
+        body: JSON.stringify({ name, email, password }),
       });
 
       if (!response.ok) {
         const responseData = await response.json();
-        console.log(responseData);
+        let errorMessage = "Sign-up failed";
+
+        if (responseData.errors && responseData.errors.email) {
+          errorMessage = "Already registered email id";
+        }
+
+        throw new Error(errorMessage);
       }
 
       console.log("Sign-up is successful");
@@ -45,7 +47,7 @@ const SignupForm: React.FC = () => {
       localStorage.setItem("userData", JSON.stringify(data.user));
       navigate("/scorepanel");
     } catch (error) {
-      setError(`Sign-up failed: ${error}`);
+      setError(`${error}`);
     }
   };
 
@@ -61,9 +63,9 @@ const SignupForm: React.FC = () => {
               className="text-center rounded-md font-bold text-black hover:text-gray-900"
               href="scorepanel"
             >
-             <p className="text-center  font-bold text-gray-500">
-             Want to Continue Without Signin click here
-              </p> 
+              <p className="text-center font-bold text-gray-500">
+                Want to Continue Without Signing in? Click here
+              </p>
               Get live score Now !
             </a>
 
@@ -83,7 +85,7 @@ const SignupForm: React.FC = () => {
                   <label className="block text-sm">Name</label>
                   <input
                     type="text"
-                    value={Name}
+                    value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="w-full px-4 py-2 text-sm border rounded-md focus:border-zinc-400 focus:outline-none focus:ring-1 focus:ring-zinc-600"
                     placeholder="Name"
@@ -93,7 +95,7 @@ const SignupForm: React.FC = () => {
                   <label className="block text-sm">Email</label>
                   <input
                     type="email"
-                    value={Email}
+                    value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full px-4 py-2 text-sm border rounded-md focus:border-zinc-400 focus:outline-none focus:ring-1 focus:ring-zinc-600"
                     placeholder="Email Address"
@@ -103,8 +105,8 @@ const SignupForm: React.FC = () => {
                   <label className="block mt-4 text-sm">Password</label>
                   <input
                     type="password"
-                    value={pass}
-                    onChange={(e) => setpass(e.target.value)}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     className="w-full px-4 py-2 text-sm border rounded-md focus:border-zinc-400 focus:outline-none focus:ring-1 focus:ring-zinc-600"
                     placeholder="Password"
                   />
@@ -117,9 +119,10 @@ const SignupForm: React.FC = () => {
                   Sign Up Now
                 </button>
               </form>
+              {error && <div className="mt-4 text-red-500">{error}</div>}
               <div className="mt-4 text-center">
                 <p className="text-sm">
-                  Don't have an account yet?
+                  Already have an account?
                   <a
                     href="signin"
                     className="ml-1 text-zinc-600 hover:underline"

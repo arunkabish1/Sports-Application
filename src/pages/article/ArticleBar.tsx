@@ -86,12 +86,12 @@ const ArticleBar: React.FC<Bar> = ({
         <div>Loading...</div>
       ) : (
         <>
-          <div className="rounded-lg px-5 mt-3 flex">
-            <label className="text-xl font-bold text-zinc-700 mr-3">
+          <div className="rounded-lg items-center p-1 flex">
+            {/* <label className="text-xl font-bold text-zinc-700 mr-3">
               Sort:
-            </label>
+            </label> */}
             <select
-              className="rounded-lg px-3 bg-[#88c2c0] w-40 h-8 text-zinc-700 hover:text-zinc-950 font-bold border-zinc-700 border"
+              className="rounded-lg px-3 bg-[#88c2c0] h-8 text-zinc-700 hover:text-zinc-950 font-bold border-zinc-700 border"
               onChange={(e) => Orderchange(e.target.value)}
             >
               <option value="date">Date</option>
@@ -99,12 +99,12 @@ const ArticleBar: React.FC<Bar> = ({
               <option value="ZA">Z-A</option>
             </select>
           </div>
-          <div className="flex justify-around mb-1 overflow-x-auto bg-[#c7e3e2] rounded-lg p-3">
+          <div className="grid grid-flow-col overflow-x-auto items-center ">
             {(!preferencesLoaded || userSports.length === 0) && (
               <button
                 className={`text-xl font-bold text-zinc-700 hover:text-zinc-900 ml-14 ${
                   Userselected === null
-                    ? "border-b-4 border-dotted  border-zinc-700"
+                    ? "border-b-4 border-solid border-zinc-700"
                     : ""
                 }`}
                 onClick={showAllSports}
@@ -116,7 +116,7 @@ const ArticleBar: React.FC<Bar> = ({
               <button
                 className={`text-xl font-bold text-zinc-700 hover:text-zinc-900 ml-14 ${
                   Userselected === null
-                    ? "border-b-4 border-dashed border-zinc-700"
+                    ? "border-b-4 border-solid border-zinc-700"
                     : ""
                 }`}
                 onClick={showYourNews}
@@ -129,7 +129,7 @@ const ArticleBar: React.FC<Bar> = ({
                 key={sport.id}
                 className={`text-xl font-bold text-zinc-700 hover:text-zinc-900 ml-14 ${
                   Userselected === sport.id
-                    ? "border-b-4 border-dotted  border-zinc-700"
+                    ? "border-b-4 border-solid  border-zinc-700"
                     : ""
                 }`}
                 onClick={() => userSport(sport.id)}

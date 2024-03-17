@@ -14,7 +14,6 @@ interface ArticleInfo {
     id: number;
     name: string;
   };
-  
 }
 
 const Modal: React.FC<{ id: number }> = ({ id }) => {
@@ -60,9 +59,9 @@ const Modal: React.FC<{ id: number }> = ({ id }) => {
     <div>
       <button
         onClick={openModal}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg"
       >
-        Read Full Article
+        View Article
       </button>
 
       <Transition show={isOpen} as={React.Fragment}>
@@ -89,28 +88,55 @@ const Modal: React.FC<{ id: number }> = ({ id }) => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <div className="inline-block overflow-y-auto max-h-[80vh] align-bottom bg-[#ffffff] rounded-lg text-left overflow-y-autoshadow-xl transform transition-all sm:w-3/4 sm:my-10">
-                <div className="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+              <div className="inline-block overflow-y-auto max-h-[90vh] mt-10 align-bottom bg-[#ffffff] rounded-lg text-left overflow-y-autoshadow-xl transform transition-all sm:w-3/4 sm:my-10">
+                <div className="px-2 pt-5 pb-4 sm:p-6 sm:pb-4">
                   {article && (
                     <div>
                       <div className="flex justify-between  rounded-lg mb-2">
-                      <h4 className="text-2xl bg-[#c7e3e2] rounded-lg font-bold p-1 px-3">{article.sport.name}
-                      </h4>                      
+                        <h4 className="text-2xl bg-[#c7e3e2] rounded-lg font-bold p-1 px-3">
+                          {article.sport.name}
+                        </h4>
                         <button
                           onClick={closeModal}
                           type="button"
-                          className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                          className="fixed top-0 right-0 mt-4 mr-4 z-50 flex justify-center items-center rounded-full border border-transparent shadow-sm bg-blue-500 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-transform transform hover:scale-110 p-2"
                         >
-                          X
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-6 w-6 animate-close"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M6 18L18 6M6 6l12 12"
+                            />
+                          </svg>
                         </button>
                       </div>
                       <div className="p-1 bg-[#c7e3e2] border border-gray-400 rounded-lg shadow-md text-grey-100 hover:bg-gray-300 cursor-pointer">
-                      <h3 className="text-2xl mb-2 font-bold text-center p-1 ">{article.title}</h3>
-                      <img className=" w-12/12 h-9/12 object-cover rounded" src={article.thumbnail} alt="article image" />
-                        <h4 className="text-xl font-bold text-center p-1">Article Summary</h4>
-                        <p className="text-gray-800 font-semibold">{article.summary}</p>
-                        <h4 className="text-xl font-bold text-center p-1">Article Content</h4>
-                        <p className="text-gray-800 font-semibold">{article.content}</p>
+                        <h3 className="text-2xl mb-2 font-bold text-center p-1 ">
+                          {article.title}
+                        </h3>
+                        <img
+                          className=" w-12/12 h-9/12 object-cover rounded"
+                          src={article.thumbnail}
+                          alt="article image"
+                        />
+                        <h4 className="text-xl font-bold text-center p-1">
+                          Article Summary
+                        </h4>
+                        <p className="text-gray-800 font-semibold">
+                          {article.summary}
+                        </p>
+                        <h4 className="text-xl font-bold text-center p-1">
+                          Article Content
+                        </h4>
+                        <p className="text-gray-800 font-semibold">
+                          {article.content}
+                        </p>
                       </div>
                     </div>
                   )}

@@ -8,13 +8,15 @@ import FetchUserPreferences from "../preference/Fetch";
 const MatchDisplayAll: React.FC = () => {
   const state = useEventsState();
   const { events, hasError, errorMsg } = state ?? {
-    events: [], 
+    events: [],
     loading: false,
     hasError: false,
     errorMsg: "",
   };
 
-  const [userSportsPreferences, setUserSportsPreferences] = useState<string[]>([]);
+  const [userSportsPreferences, setUserSportsPreferences] = useState<string[]>(
+    []
+  );
   const [userTeamPreferences, setUserTeamPreferences] = useState<string[]>([]);
   const [filteredEvents, setFilteredEvents] = useState<any[]>([]);
   const [scoresById, setScoresById] = useState<Record<number, string>>({});
@@ -29,12 +31,16 @@ const MatchDisplayAll: React.FC = () => {
   };
 
   useEffect(() => {
-    if (userSportsPreferences.length === 0 && userTeamPreferences.length === 0) {
+    if (
+      userSportsPreferences.length === 0 &&
+      userTeamPreferences.length === 0
+    ) {
       setFilteredEvents(events);
     } else {
-      const filteredEvents = events.filter(event =>
-        userSportsPreferences.includes(event.sportName) ||
-        event.teams.some(team => userTeamPreferences.includes(team.name))
+      const filteredEvents = events.filter(
+        (event) =>
+          userSportsPreferences.includes(event.sportName) ||
+          event.teams.some((team) => userTeamPreferences.includes(team.name))
       );
       setFilteredEvents(filteredEvents);
     }
@@ -88,12 +94,12 @@ const MatchDisplayAll: React.FC = () => {
         <img className="h-9" src={Scoreboard} alt="Scoreboard" />
         <h1 className="text-2xl font-bold">Live Score</h1>
       </div>
-      <div className="flex overflow-x-auto">
+      <div className="grid grid-flow-col overflow-x-auto">
         {liveMatches.map((event: any) => (
           <div key={event.id} className="p-2">
             <div
               style={innerWidth > 768 ? { width: "350px" } : { width: "100%" }}
-              className=" p-4 bg-[#c7e3e2] border  border-gray-400 rounded-lg shadow-md text-grey-100 hover:bg-gray-300 cursor-pointer"
+              className="p-2 min-w-[300px] bg-[#c7e3e2] border  border-gray-400 rounded-lg shadow-md text-grey-100 hover:bg-gray-300 cursor-pointer"
             >
               <div className="flex justify-between">
                 <h5 className="mb-1 text-xl">
@@ -134,7 +140,7 @@ const MatchDisplayAll: React.FC = () => {
                     className="rounded-md bg-blue-500 px-4 py-2 mt-2 text-sm font-medium text-white hover:bg-blue-600"
                     onClick={handleLiveScore}
                   >
-                    Refresh Score
+                    Refresh Scores
                   </button>
                   <Modal id={event.id} />
                 </div>
@@ -146,7 +152,7 @@ const MatchDisplayAll: React.FC = () => {
           <div key={event.id} className="p-2">
             <div
               style={innerWidth > 768 ? { width: "350px" } : { width: "100%" }}
-              className=" p-4 bg-[#c7e3e2] border border-gray-400 rounded-lg shadow-md text-grey-100 hover:bg-gray-300 cursor-pointer"
+              className="p-2 min-w-[300px] bg-[#c7e3e2] border border-gray-400 rounded-lg shadow-md text-grey-100 hover:bg-gray-300 cursor-pointer"
             >
               <div className="flex justify-between">
                 <h5 className="mb-1 text-xl">

@@ -25,7 +25,17 @@ const SigninForm: React.FC = () => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Sign-in failed");
+        let errorMessage = "Sign-in failed";
+
+        if (response.status === 401) {
+          errorMessage = "Incorrect email or password";
+        } else if (response.status === 404) {
+          errorMessage = "Email not registered";
+        } else if (errorData.message) {
+          errorMessage = errorData.message;
+        }
+
+        throw new Error(errorMessage);
       }
 
       console.log("Sign-in is successful");
@@ -36,7 +46,7 @@ const SigninForm: React.FC = () => {
       localStorage.setItem("userData", JSON.stringify(data.user));
       navigate("/scorepanel");
     } catch (error) {
-      setError(`Sign-in failed: ${error}`);
+      setError(`${error}`);
     }
   };
 
@@ -52,9 +62,9 @@ const SigninForm: React.FC = () => {
               className="text-center rounded-md font-bold text-black hover:text-gray-900"
               href="scorepanel"
             >
-             <p className="text-center  font-bold text-gray-500">
-             Want to Continue Without Signin click here
-              </p> 
+              <p className="text-center  font-bold text-gray-500">
+                Want to Continue Without Signin click here
+              </p>
               Get live score Now !
             </a>
             <p className="text-center  font-bold text-gray-500">

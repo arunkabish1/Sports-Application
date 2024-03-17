@@ -3,9 +3,11 @@ import { UserCircleIcon, CogIcon } from "@heroicons/react/24/outline";
 import logo from "../../assets/logo.png";
 import { Fragment, useState, useEffect } from "react";
 import PreferencesForm from "../../pages/preference/PreferencesForm";
+import PasswordForm from "../../pages/changepass/passwordchange";
 
 const Appbar = () => {
   const [showPreferencesModal, setShowPreferencesModal] = useState(false);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
@@ -22,11 +24,18 @@ const Appbar = () => {
   const closePreferencesModal = () => {
     setShowPreferencesModal(false);
   };
+  const openPasswordModal = () => {
+    setShowPasswordModal(true);
+  };
+
+  const closePasswordModal = () => {
+    setShowPasswordModal(false);
+  };
 
   const Navigation = token
     ? [
         { name: "Sign Out", href: "/logout" },
-        { name: "Change Password", href: "/passwordchange" },
+        { name: "Change Password", onClick: openPasswordModal },
       ]
     : [
         { name: "Sign In", href: "/signin" },
@@ -79,6 +88,7 @@ const Appbar = () => {
                           {({ active }) => (
                             <a
                               href={item.href}
+                              onClick={item.onClick}
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
@@ -99,6 +109,11 @@ const Appbar = () => {
       </Disclosure>
       {showPreferencesModal && (
         <PreferencesForm onClose={closePreferencesModal} />
+      )}
+      {showPasswordModal && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <PasswordForm onClose={closePasswordModal} />
+        </div>
       )}
     </div>
   );
