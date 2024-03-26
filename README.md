@@ -76,3 +76,4 @@ This React application provides users with access to sports news articles, live 
 https://sports-app-arunkabish.netlify.app/scorepanel
 
 # Demo Video of Running the Application
+https://www.loom.com/share/1bf824bf240f462d80cd90a224122e24?sid=4c8140a1-7be7-477a-a648-e749df559173
