@@ -77,7 +77,7 @@ const SignupForm: React.FC = () => {
           <div className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
             <div className="w-full">
               <div className="flex justify-center"></div>
-              <h1 className="mb-4 text-2xl font-bold text-center text-gray-700">
+              <h1 className="mb-4 text-2xl p-4 font-bold text-center text-gray-700">
                 Sign up
               </h1>
               <form onSubmit={handleSubmit}>

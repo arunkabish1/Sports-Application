@@ -56,7 +56,7 @@ const Appbar = () => {
                   <img src={logo} alt="Logo" className="h-10" />
                 </div>
                 {token && (
-                  <div className="hidden md:flex items-center space-x-4">
+                  <div className="md:flex items-center space-x-4">
                     <button
                       onClick={openPreferencesModal}
                       className="text-white focus:outline-none"

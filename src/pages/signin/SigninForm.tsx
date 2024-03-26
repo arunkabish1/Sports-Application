@@ -51,7 +51,7 @@ const SigninForm: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center min-h-screen bg-[#c7e3e2]">
+    <div className="flex items-center min-h-screen bg-[#c7e3e2] justify-center">
       <div className="flex-1 h-full max-w-4xl mx-auto bg-white rounded-lg shadow-xl">
         <div className="flex flex-col md:flex-row">
           <div className="h-32 flex flex-col justify-center gap-10 md:h-auto md:w-1/2">
@@ -75,7 +75,7 @@ const SigninForm: React.FC = () => {
           <div className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
             <div className="w-full">
               <div className="flex justify-center"></div>
-              <h1 className="mb-4 text-2xl font-bold text-center text-gray-700">
+              <h1 className="mb-4 text-2xl p-4 font-bold text-center text-gray-700">
                 Sign in
               </h1>
               <form onSubmit={handleSubmit}>

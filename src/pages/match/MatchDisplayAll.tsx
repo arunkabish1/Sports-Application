@@ -94,7 +94,7 @@ const MatchDisplayAll: React.FC = () => {
         <img className="h-9" src={Scoreboard} alt="Scoreboard" />
         <h1 className="text-2xl font-bold">Live Score</h1>
       </div>
-      <div className="grid grid-flow-col overflow-x-auto">
+      <div className="flex flex-row overflow-x-auto">
         {liveMatches.map((event: any) => (
           <div key={event.id} className="p-2">
             <div
