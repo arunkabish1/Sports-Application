@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useArticleState } from "../../context/article/context";
-import Gif from "../../assets/book.gif";
 import Modal from "./Modal";
 import ArticleBar from "./ArticleBar";
 import loadinggif from "../../assets/loading.gif";
@@ -75,10 +74,6 @@ const ArticalDisplayAll: React.FC = () => {
 
   return (
     <>
-      <div className="flex flex-row gap-3 mb-4 overflow-x-auto">
-        <img className="h-8" src={Gif} alt="Article icon" />
-        <h1 className="text-2xl font-bold">Trending Articles</h1>
-      </div>
       <ArticleBar
         sportnames={sports}
         Userselected={Userselected}

@@ -26,10 +26,11 @@ const Scorepanel: React.FC = () => {
   return (
     <>
       <ErrorBoundary>
+      <AccountLayout />
         <Suspense fallback={<div className="suspense-loading">Loading...</div>}>
-          <div className="flex items-center mb-4">
-            <label className="mr-2">Select Language:</label>
-            <select
+          <div className="flex  items-center justify-end bg-black text-white">
+            <label className="mr-2 text-xl bg-black">Select Language:</label>
+            <select className="bg-black  border rounded-lg p-1"
               value={selectedLanguage}
               onChange={(e) => setSelectedLanguage(e.target.value)}
             >
@@ -40,7 +41,7 @@ const Scorepanel: React.FC = () => {
               ))}
             </select>
           </div>
-          <AccountLayout />
+         
           <Match selectedLanguage={selectedLanguage} />
           <div className="grid grid-cols-4 gap-1">
             {isSmallScreen ? (

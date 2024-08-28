@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useEventsState } from "../../context/match/context";
-import Scoreboard from "../../assets/scoreboard.gif";
 import Modal from "./Modal";
 import { API_ENDPOINT } from "../../config/constants";
 import FetchUserPreferences from "../preference/Fetch";
@@ -91,9 +90,7 @@ const MatchDisplayAll: React.FC = () => {
   return (
     <div className="mt-5">
       <div className="flex flex-row gap-2 mt-3">
-        <img className="h-9" src={Scoreboard} alt="Scoreboard" />
-        <h1 className="text-2xl font-bold">Live Score</h1>
-      </div>
+              </div>
       <div className="flex flex-row overflow-x-auto">
         {liveMatches.map((event: any) => (
           <div key={event.id} className="p-2">

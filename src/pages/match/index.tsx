@@ -1,6 +1,8 @@
 import MatchDisplay from "./MatchDisplay";
 import React, { Suspense, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import Scoreboard from "../../assets/scoreboard.gif";
+
 
 interface ChildProps {
   selectedLanguage: string;
@@ -40,16 +42,30 @@ const Match = ({ selectedLanguage }: ChildProps) => {
   useEffect(() => {
     changeLanguage(selectedLanguage);
   }, [selectedLanguage]);
+  
 
   return (
     <>
-      <h3 className="text-l font-bold font-custom">
-        {" "}
-        Date : {formattedDate} <br /> Time : {formattedTime} <br /> Currency :{" "}
-        {formattedCurrency}{" "}
-      </h3>
-      {t("Live and completed matches")}
+      <div className="justify-center flex mb-9 bg-black text-white gap-6">
+        <h3 className="text-l font-bold font-custom">
+          {" "}
+          Date : {formattedDate}
+        </h3>
+        <h3 className="text-l font-bold font-custom">
+          {" "}
+         Time : {formattedTime}{" "}
+        </h3>
+        <h3 className="text-l font-bold font-custom">
+           Currency : {formattedCurrency}{" "}
+        </h3>
+      </div>
+      <div className="flex">
+      <img className="h-9" src={Scoreboard} alt="Scoreboard" />
+      <h1 className="text-2xl font-bold">{t("Live and completed matches")}</h1>
+      
+      </div>
       <MatchDisplay />
+      {/* djkbw */}
     </>
   );
 };

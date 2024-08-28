@@ -47,7 +47,7 @@ const Appbar = () => {
 
   return (
     <div>
-      <Disclosure as="nav" className="border-b border-slate-200">
+      <Disclosure as="nav" className="">
         {({}) => (
           <div className="bg-black">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
